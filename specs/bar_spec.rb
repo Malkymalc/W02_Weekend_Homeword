@@ -1,12 +1,11 @@
 require('minitest/autorun')
 require('minitest/rg')
 require_relative('../bar.rb')
-require_relative('../cellar.rb')
+require_relative('../transaction.rb')
 require_relative('../drink.rb')
 require_relative('../guest.rb')
 require_relative('../room.rb')
 require_relative('../song.rb')
-require_relative('../sound_sys.rb')
 require_relative('../till.rb')
 require_relative('../venue.rb')
 
@@ -18,11 +17,17 @@ class TestBar < MiniTest::Test
     @drink_4 = Drink.new('Lager',4,3)
     @drink_5 = Drink.new('Beer',5,5)
     drinks_list = [@drink_1,@drink_2,@drink_3,@drink_4,@drink_5]
-    @cellar = Cellar.new(drinks_list) #how to add multiple drinks?
+    #@cellar = Cellar.new(drinks_list) #add multiples of drinks at instantiation?
+    @food_1 = Food.new('R',6,13)
+    @food_2 = Food.new('Gin and Tonic',7,6)
+    @food_3 = Food.new('Whiskey',8,25)
+    @food_4 = Food.new('Lager',4,3)
+    @food_5 = Food.new('Beer',5,5)
+    foods_list = [@food_1,@food_2,@food_3,@food_4,@food_5]
 
     @song_1 = Song.new('A Case of You','Joni Mitchel','Singer-Songwriter',4.23)
-    @song_2 = Song.new('A Case of You','Joni Mitchel','Singer-Songwriter',4.23)
-    @song_3 = Song.new('A Case of You','Joni Mitchel','Singer-Songwriter',4.23)
+    @song_2 = Song.new('Beast of Burden','The Rolling Stones','Rock',5.15)
+    @song_3 = Song.new('So What?','Miles Davis','Jazz',6.45)
     song_list = [@song_1,@song_2,@song_3]
     @sound_sys = SoundSystem.new(song_list)
 
@@ -31,10 +36,17 @@ class TestBar < MiniTest::Test
     @room_3 = Room.new('Side Room', 20)
     @room_4 = Room.new('Party Room', 25)
     @room_5 = Room.new('Small Room',7)
-    #When Room is instantiated it will create a Bar.
+    #When Room is instantiated it will instatiate a Bar,
+    #which in turn will instantiate a Till with a £50 float, and have a default stock of drinks
     rooms = [@room_1,@room_2,@room_3,@room_4,@room_5]
 
-    @venue = Venue.new('CodeClan Caraoke',sound_sys,cellar,rooms)
+    @guest_1 = Guest.new('Alan',1000,'A Case of You')
+    @guest_2 = Guest.new('Bob',500,'Beast of Burden')
+    @guest_3 = Guest.new('Chris',100,'Saturday Night')
+    @guest_4 = Guest.new('Dave',75,'So What?')
+    @guest_5 = Guest.new('Ellen',250,'In Bloom')
+
+    @venue = Venue.new('CodeClan Caraoke',@sound_sys,@cellar,rooms)
   end
 
   def test_
